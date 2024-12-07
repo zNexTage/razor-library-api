@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FC4E53C6-C3E4-414D-AFEA-312562680A10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorLibrary.Domain", "RazorLibrary.Domain\RazorLibrary.Domain.csproj", "{EAAA0F87-3911-4553-A0BC-3870350C9611}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAAA0F87-3911-4553-A0BC-3870350C9611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAAA0F87-3911-4553-A0BC-3870350C9611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAAA0F87-3911-4553-A0BC-3870350C9611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAAA0F87-3911-4553-A0BC-3870350C9611}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAAA0F87-3911-4553-A0BC-3870350C9611} = {FC4E53C6-C3E4-414D-AFEA-312562680A10}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5AFA4AA-ED31-4CFD-90E5-4B4D34E29629}
+	EndGlobalSection
+EndGlobal
