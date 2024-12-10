@@ -1,0 +1,6 @@
+@RazorLibrary.API_HostAddress = http://localhost:5020
+
+GET {{RazorLibrary.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
