@@ -8,6 +8,6 @@
 
         public string Photo { get; set; } = string.Empty;
 
-        public List<string> Authors { get; set; } = new List<string>();
+        public string Authors { get; set; } = string.Empty;
     }
 }
