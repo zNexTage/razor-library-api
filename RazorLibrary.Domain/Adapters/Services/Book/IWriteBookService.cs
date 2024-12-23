@@ -1,12 +1,12 @@
 ﻿namespace RazorLibrary.Domain.Adapters.Services.Book
 {
-    using RazorLibrary.Domain.Entities;
+    using RazorLibrary.Domain.DataTransferObject.Book;
 
     public interface IWriteBookService
     {
-        public Task<Book> Add();
+        public Task<ReadBookDto> Add(WriteBookDto bookDto);
 
-        public Task<Book> Edit(string id);
+        public Task<ReadBookDto> Edit(WriteBookDto bookDto);
 
         public Task Delete(string id);
     }
