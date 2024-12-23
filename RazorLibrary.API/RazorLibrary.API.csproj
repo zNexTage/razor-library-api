@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RazorLibrary.Application\RazorLibrary.Application.csproj" />
     <ProjectReference Include="..\RazorLibrary.Infra\RazorLibrary.Infra.csproj" />
   </ItemGroup>
 

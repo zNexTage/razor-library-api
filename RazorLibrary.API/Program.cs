@@ -1,4 +1,5 @@
 using RazorLibrary.Infra;
+using RazorLibrary.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ var configuration = builder.Configuration;
 
 // Adiciona infra
 builder.Services.AddInfra(configuration);
+
+// Adiciona application
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
