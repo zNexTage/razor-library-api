@@ -2,7 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RazorLibrary.Domain.Adapters.Repositories;
+using RazorLibrary.Domain.Adapters.Repositories.Book;
 using RazorLibrary.Infra.Database;
+using RazorLibrary.Infra.Repositories;
+using RazorLibrary.Infra.Repositories.Book;
 
 namespace RazorLibrary.Infra
 {
@@ -16,6 +20,10 @@ namespace RazorLibrary.Infra
             AddFluentMigration(services, configuration);
 
             MigrateDatabase(services);
+
+            AddRepositories(services);
+            
+            AddUnitOfWork(services);
         }
 
         private static void AddSqlContext(IServiceCollection service, IConfiguration configuration)
@@ -51,6 +59,17 @@ namespace RazorLibrary.Infra
 
                 runner.MigrateUp();
             }
+        }
+
+
+        private static void AddRepositories(IServiceCollection service)
+        {
+            service.AddScoped<IWriteBookRepository, WriteBookRepository>();
+        }
+
+        private static void AddUnitOfWork(IServiceCollection service)
+        {
+            service.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
