@@ -5,6 +5,7 @@ using RazorLibrary.Domain.Adapters.Repositories.Book;
 using RazorLibrary.Domain.Adapters.Services.Book;
 using RazorLibrary.Domain.DataTransferObject.Book;
 using RazorLibrary.Domain.Entities;
+using RazorLibrary.Domain.Exception;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -12,12 +13,17 @@ namespace RazorLibrary.Application.Services.Book
 {
     public class WriteBookService : IWriteBookService
     {
-        private readonly IWriteBookRepository _repository;
+        private readonly IWriteBookRepository _wRepository;
+        private readonly IReadBookRepository _rRepository;
+
         private readonly IUnitOfWork _unitOfWork;
 
-        public WriteBookService(IWriteBookRepository repository, IUnitOfWork unitOfWork)
+        public WriteBookService(IWriteBookRepository wRepository,
+            IReadBookRepository rRepository,
+            IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _wRepository = wRepository;
+            _rRepository = rRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -35,12 +41,12 @@ namespace RazorLibrary.Application.Services.Book
                 Authors = authors
             };
 
-            await _repository.Add(book);
+            await _wRepository.Add(book);
             await _unitOfWork.CommitAsync();
 
             return new ReadBookDto()
             {
-                Id = book.Id,
+                Id = book.Id.ToString(),
                 Title = book.Title,
                 Photo = book.Photo,
                 Publisher = book.Publisher,
@@ -48,9 +54,18 @@ namespace RazorLibrary.Application.Services.Book
             };
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            var bookExists = await _rRepository.Exists(id);
+
+            if (!bookExists)
+            {
+                throw new NotFoundException("Não é possível concluir a ação, pois o livro buscado não existe."); 
+            }
+
+            await _wRepository.Delete(id);
+
+            await _unitOfWork.CommitAsync();
         }
 
         public Task<ReadBookDto> Edit(WriteBookDto bookDto)

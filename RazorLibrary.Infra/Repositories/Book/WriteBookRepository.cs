@@ -1,5 +1,4 @@
 ﻿using RazorLibrary.Domain.Adapters.Repositories.Book;
-using RazorLibrary.Domain.DataTransferObject.Book;
 using RazorLibrary.Infra.Database;
 
 namespace RazorLibrary.Infra.Repositories.Book
@@ -20,14 +19,16 @@ namespace RazorLibrary.Infra.Repositories.Book
             return book;
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            // Apenas converte o id, que é uma string, para guid.           
+
+            _context.Books.Remove(new Domain.Entities.Book() { Id = new Guid(id)});
         }
 
         public Task<Domain.Entities.Book> Edit(Domain.Entities.Book book)
         {
             throw new NotImplementedException();
-        }
+        }       
     }
 }

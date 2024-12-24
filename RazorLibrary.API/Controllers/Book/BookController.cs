@@ -47,7 +47,20 @@ namespace RazorLibrary.API.Controllers.Book
             {
                 return NotFound(err.Message);
             }
+        }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            try
+            {
+                await _writeBookService.Delete(id);
+
+                return Ok();
+            }
+            catch (NotFoundException err) {
+                return NotFound(err.Message);
+            }
         }
     }
 }
