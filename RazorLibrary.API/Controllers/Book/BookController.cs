@@ -10,10 +10,13 @@ namespace RazorLibrary.API.Controllers.Book
     public class BookController : ControllerBase
     {
         private IWriteBookService _writeBookService;
+        private IReadBookService _readBookService;
 
-        public BookController(IWriteBookService writeBookService)
+        public BookController(IWriteBookService writeBookService, 
+            IReadBookService readBookService)
         {
             _writeBookService = writeBookService;
+            _readBookService = readBookService;
         }
 
         [HttpPost]
@@ -21,6 +24,14 @@ namespace RazorLibrary.API.Controllers.Book
             var result = await _writeBookService.Add(book);
 
             return Created(string.Empty, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAll()
+        {
+            var books = await _readBookService.GetAll();
+
+            return Ok(books);
         }
     }
 }
