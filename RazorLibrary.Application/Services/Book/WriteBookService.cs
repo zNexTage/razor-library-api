@@ -1,8 +1,11 @@
-﻿using RazorLibrary.Domain.Adapters.Repositories;
+﻿using FluentValidation;
+using RazorLibrary.Application.Validators.Book;
+using RazorLibrary.Domain.Adapters.Repositories;
 using RazorLibrary.Domain.Adapters.Repositories.Book;
 using RazorLibrary.Domain.Adapters.Services.Book;
 using RazorLibrary.Domain.DataTransferObject.Book;
 using RazorLibrary.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace RazorLibrary.Application.Services.Book
@@ -20,6 +23,8 @@ namespace RazorLibrary.Application.Services.Book
 
         public async Task<ReadBookDto> Add(WriteBookDto bookDto)
         {
+            Validate(bookDto);
+
             var authors = String.Join(", ", bookDto.Authors);
 
             var book = new Domain.Entities.Book()
@@ -51,6 +56,13 @@ namespace RazorLibrary.Application.Services.Book
         public Task<ReadBookDto> Edit(WriteBookDto bookDto)
         {
             throw new NotImplementedException();
+        }
+
+        private void Validate(WriteBookDto bookDto)
+        {
+            var validator = new WriteBookValidator();
+
+            validator.ValidateAndThrow(bookDto);
         }
     }
 }
