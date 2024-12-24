@@ -11,7 +11,7 @@ namespace RazorLibrary.Infra.Repositories.Book
         public ReadBookRepository(BookContext context)
         {
             _context = context;
-        }
+        }        
 
         public async Task<List<Domain.Entities.Book>> GetAll()
         {
@@ -21,6 +21,11 @@ namespace RazorLibrary.Infra.Repositories.Book
         public async Task<Domain.Entities.Book> GetById(string id)
         {
             return await _context.Books.FirstOrDefaultAsync(b => b.Id.ToString() == id);
+        }
+
+        public async Task<bool> Exists(string id)
+        {
+            return await _context.Books.AnyAsync(book => book.Id.ToString() == id);
         }
     }
 }

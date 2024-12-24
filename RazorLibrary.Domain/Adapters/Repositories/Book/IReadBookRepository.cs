@@ -6,6 +6,8 @@
     {
         public Task<List<Book>> GetAll();
 
-        public Task<Book> GetById(string id);
+        public Task<Book> GetById(string id);    
+        
+        public Task<bool> Exists(string id);
     }
 }
