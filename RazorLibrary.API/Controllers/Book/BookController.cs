@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RazorLibrary.Domain.Adapters.Services.Book;
 using RazorLibrary.Domain.DataTransferObject.Book;
+using RazorLibrary.Domain.Exception;
 
 namespace RazorLibrary.API.Controllers.Book
 {
@@ -32,6 +32,22 @@ namespace RazorLibrary.API.Controllers.Book
             var books = await _readBookService.GetAll();
 
             return Ok(books);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById(string id)
+        {
+            try
+            {
+                var book = await _readBookService.GetById(id);
+
+                return Ok(book);
+            }
+            catch (NotFoundException err)
+            {
+                return NotFound(err.Message);
+            }
+
         }
     }
 }

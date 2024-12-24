@@ -4,7 +4,7 @@
 
     public interface IReadBookService
     {
-        public List<Book> GetAll();
-        public Book GetById(string id);
+        public Task<List<Book>> GetAll();
+        public Task<Book> GetById(string id);
     }
 }

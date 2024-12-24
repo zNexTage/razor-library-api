@@ -1,5 +1,6 @@
 ﻿using RazorLibrary.Domain.Adapters.Repositories.Book;
 using RazorLibrary.Domain.Adapters.Services.Book;
+using RazorLibrary.Domain.Exception;
 
 namespace RazorLibrary.Application.Services.Book
 {
@@ -19,9 +20,13 @@ namespace RazorLibrary.Application.Services.Book
             return books;
         }
 
-        Task<Domain.Entities.Book> IReadBookService.GetById(string id)
+        async Task<Domain.Entities.Book> IReadBookService.GetById(string id)
         {
-            throw new NotImplementedException();
+            var book = await _readBookRepository.GetById(id);
+
+            if (book is null) throw new NotFoundException("Livro não localizado");
+
+            return book;
         }
     }
 }
