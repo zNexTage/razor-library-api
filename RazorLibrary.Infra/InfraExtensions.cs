@@ -65,6 +65,7 @@ namespace RazorLibrary.Infra
         private static void AddRepositories(IServiceCollection service)
         {
             service.AddScoped<IWriteBookRepository, WriteBookRepository>();
+            service.AddScoped<IReadBookRepository, ReadBookRepository>();
         }
 
         private static void AddUnitOfWork(IServiceCollection service)
