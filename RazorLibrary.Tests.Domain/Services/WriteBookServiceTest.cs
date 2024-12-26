@@ -363,5 +363,29 @@ namespace RazorLibrary.Tests.Application.Services
             Assert.Equal("Por favor, informe o nome do autor", message);
         }
 
+
+        [Fact]
+        public async void Delete_WithNotExistsBook_ThrowsException()
+        {
+            //Arrange
+            var bookDto = WriteBookDtoBuilder.Build();
+
+            var unit = UnitOfWorkBuilder.Build();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build(existsReturn: false); // Diz que o retorno de Exists é falso
+            var mapper = MapperBuilder.Build();
+            var service = new WriteBookService(wRepo, rRepo, unit, mapper);
+
+            //Act
+            var result = await Assert.ThrowsAsync<NotFoundException>(async () =>
+            {
+                await service.Delete(new Guid().ToString());
+            });
+
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.Equal("Não é possível concluir a ação, pois o livro buscado não existe.", result.Message);
+        }
     }
 }
