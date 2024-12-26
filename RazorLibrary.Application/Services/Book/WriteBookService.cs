@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using RazorLibrary.Application.Validators.Book;
 using RazorLibrary.Domain.Adapters.Repositories;
 using RazorLibrary.Domain.Adapters.Repositories.Book;
@@ -15,43 +16,34 @@ namespace RazorLibrary.Application.Services.Book
     {
         private readonly IWriteBookRepository _wRepository;
         private readonly IReadBookRepository _rRepository;
+        private readonly IMapper _mapper;
 
         private readonly IUnitOfWork _unitOfWork;
 
         public WriteBookService(IWriteBookRepository wRepository,
             IReadBookRepository rRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IMapper mapper
+            )
         {
             _wRepository = wRepository;
             _rRepository = rRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<ReadBookDto> Add(WriteBookDto bookDto)
         {
             Validate(bookDto);
 
-            var authors = String.Join(", ", bookDto.Authors);
-
-            var book = new Domain.Entities.Book()
-            {
-                Title = bookDto.Title,
-                Photo = bookDto.Photo,
-                Publisher = bookDto.Publisher,
-                Authors = authors
-            };
+            var book = _mapper.Map<Domain.Entities.Book>(bookDto);
 
             await _wRepository.Add(book);
             await _unitOfWork.CommitAsync();
 
-            return new ReadBookDto()
-            {
-                Id = book.Id.ToString(),
-                Title = book.Title,
-                Photo = book.Photo,
-                Publisher = book.Publisher,
-                Authors = book.Authors.Split(',').ToList()
-            };
+            var readDto = _mapper.Map<ReadBookDto>(book);
+
+            return readDto;
         }
 
         public async Task Delete(string id)
@@ -64,7 +56,6 @@ namespace RazorLibrary.Application.Services.Book
             }
 
             await _wRepository.Delete(id);
-
             await _unitOfWork.CommitAsync();
         }
 
@@ -79,23 +70,12 @@ namespace RazorLibrary.Application.Services.Book
                 throw new NotFoundException("Não é possível concluir a ação, pois o livro buscado não existe.");
             }
 
-            book.Title = bookDto.Title;
-            book.Publisher = bookDto.Publisher;
-            book.Authors = String.Join(", ", bookDto.Authors);
-            book.Photo = bookDto.Photo;
+            book = _mapper.Map<Domain.Entities.Book>(bookDto);
 
             await _wRepository.Edit(book);
-
             await _unitOfWork.CommitAsync();
 
-            return new ReadBookDto()
-            {
-                Authors = book.Authors.Split(", ").ToList(),
-                Photo = bookDto.Photo,
-                Id = book.Id.ToString(),
-                Title = book.Title,
-                Publisher = book.Publisher
-            };
+            return _mapper.Map<ReadBookDto>(book);
         }
 
         private void Validate(WriteBookDto bookDto)
