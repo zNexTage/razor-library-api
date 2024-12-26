@@ -21,9 +21,17 @@ namespace RazorLibrary.API.Controllers.Book
 
         [HttpPost]
         public async Task<ActionResult> Add(WriteBookDto book) {
-            var result = await _writeBookService.Add(book);
+            try
+            {
+                var result = await _writeBookService.Add(book);
 
-            return Created(string.Empty, result);
+                return Created(string.Empty, result);
+            }
+            catch(ValidationException err)
+            {
+                return BadRequest(err.ErrorMessages);
+            }
+
         }
 
         [HttpGet]
@@ -75,6 +83,10 @@ namespace RazorLibrary.API.Controllers.Book
             catch (NotFoundException err)
             {
                 return NotFound(err.Message);
+            }
+            catch(ValidationException err)
+            {
+                return BadRequest(err.ErrorMessages);
             }
         }
     }

@@ -102,7 +102,14 @@ namespace RazorLibrary.Application.Services.Book
         {
             var validator = new WriteBookValidator();
 
-            validator.ValidateAndThrow(bookDto);
+            var result = validator.Validate(bookDto);
+
+            if (!result.IsValid)
+            {
+                var errors = result.Errors.ToDictionary(error => error.PropertyName, error => error.ErrorMessage);
+
+                throw new Domain.Exception.ValidationException(errors);
+            }
         }
     }
 }
