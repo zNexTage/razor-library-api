@@ -1,6 +1,7 @@
-﻿using FluentValidation;
-using RazorLibrary.Application.Services.Book;
+﻿using RazorLibrary.Application.Services.Book;
+using RazorLibrary.Domain.Exception;
 using RazorLibrary.Tests.Commom.Mock.Builders;
+using RazorLibrary.Tests.Commom.Mock.Mapper;
 using RazorLibrary.Tests.Commom.Mock.Repositories.Book;
 
 namespace RazorLibrary.Tests.Application.Services
@@ -14,10 +15,12 @@ namespace RazorLibrary.Tests.Application.Services
             var book = WriteBookDtoBuilder.Build();
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act 
-            var result = await new WriteBookService(repo, unit).Add(book);
+            var result = await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
 
             //Assert
             Assert.NotNull(result);
@@ -35,20 +38,22 @@ namespace RazorLibrary.Tests.Application.Services
             book.Title = string.Empty;
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act
             var result = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                await new WriteBookService(repo, unit).Add(book);
+                await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
             });
 
             //Assert
-            Assert.Single(result.Errors);
+            Assert.Single(result.ErrorMessages);
 
-            var error = result.Errors.First();
+            var error = result.ErrorMessages.TryGetValue("Title", out string message);
 
-            Assert.Equal("Por favor, informe o título do livro", error.ErrorMessage);
+            Assert.Equal("Por favor, informe o título do livro", message);
         }
 
 
@@ -60,20 +65,22 @@ namespace RazorLibrary.Tests.Application.Services
             book.Photo = string.Empty;
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act
             var result = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                await new WriteBookService(repo, unit).Add(book);
+                await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
             });
 
             //Assert
-            Assert.Single(result.Errors);
+            Assert.Single(result.ErrorMessages);
 
-            var error = result.Errors.First();
+            var error = result.ErrorMessages.TryGetValue("Photo", out string message);
 
-            Assert.Equal("Por favor, informe a foto do livro", error.ErrorMessage);
+            Assert.Equal("Por favor, informe a foto do livro", message);
         }
 
         [Fact]
@@ -84,20 +91,22 @@ namespace RazorLibrary.Tests.Application.Services
             book.Publisher = string.Empty;
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act
             var result = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                await new WriteBookService(repo, unit).Add(book);
+                await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
             });
 
             //Assert
-            Assert.Single(result.Errors);
+            Assert.Single(result.ErrorMessages);
 
-            var error = result.Errors.First();
+            result.ErrorMessages.TryGetValue("Publisher", out string message);
 
-            Assert.Equal("Por favor, informe a editora", error.ErrorMessage);
+            Assert.Equal("Por favor, informe a editora", message);
         }
 
         [Fact]
@@ -108,20 +117,22 @@ namespace RazorLibrary.Tests.Application.Services
             book.Authors = [];
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act
             var result = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                await new WriteBookService(repo, unit).Add(book);
+                await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
             });
 
             //Assert
-            Assert.Single(result.Errors);
+            Assert.Single(result.ErrorMessages);
 
-            var error = result.Errors.First();
+            result.ErrorMessages.TryGetValue("Authors", out string message);
 
-            Assert.Equal("Por favor, informe pelo menos 1 autor.", error.ErrorMessage);
+            Assert.Equal("Por favor, informe pelo menos 1 autor.", message);
         }
 
 
@@ -133,20 +144,22 @@ namespace RazorLibrary.Tests.Application.Services
             book.Authors = [""];
 
             var unit = UnitOfWorkBuilder.Build();
-            var repo = WriteBookRepositoryBuilder.BuildAdd();
+            var wRepo = WriteBookRepositoryBuilder.BuildAdd();
+            var rRepo = ReadBookRepositoryBuilder.Build();
+            var mapper = MapperBuilder.Build();
 
             //Act
             var result = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                await new WriteBookService(repo, unit).Add(book);
+                await new WriteBookService(wRepo, rRepo, unit, mapper).Add(book);
             });
 
             //Assert
-            Assert.Single(result.Errors);
+            Assert.Single(result.ErrorMessages);
 
-            var error = result.Errors.First();
+            result.ErrorMessages.TryGetValue("Authors[0]", out string message);
 
-            Assert.Equal("Por favor, informe o nome do autor", error.ErrorMessage);
+            Assert.Equal("Por favor, informe o nome do autor", message);
         }
     }
 }
