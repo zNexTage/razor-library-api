@@ -68,9 +68,34 @@ namespace RazorLibrary.Application.Services.Book
             await _unitOfWork.CommitAsync();
         }
 
-        public Task<ReadBookDto> Edit(WriteBookDto bookDto)
+        public async Task<ReadBookDto> Edit(string id, WriteBookDto bookDto)
         {
-            throw new NotImplementedException();
+            Validate(bookDto);
+
+            var book = await _rRepository.GetById(id);
+
+            if (book is null)
+            {
+                throw new NotFoundException("Não é possível concluir a ação, pois o livro buscado não existe.");
+            }
+
+            book.Title = bookDto.Title;
+            book.Publisher = bookDto.Publisher;
+            book.Authors = String.Join(", ", bookDto.Authors);
+            book.Photo = bookDto.Photo;
+
+            await _wRepository.Edit(book);
+
+            await _unitOfWork.CommitAsync();
+
+            return new ReadBookDto()
+            {
+                Authors = book.Authors.Split(", ").ToList(),
+                Photo = bookDto.Photo,
+                Id = book.Id.ToString(),
+                Title = book.Title,
+                Publisher = book.Publisher
+            };
         }
 
         private void Validate(WriteBookDto bookDto)

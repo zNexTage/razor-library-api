@@ -6,7 +6,7 @@
     {
         public Task<ReadBookDto> Add(WriteBookDto bookDto);
 
-        public Task<ReadBookDto> Edit(WriteBookDto bookDto);
+        public Task<ReadBookDto> Edit(string id, WriteBookDto bookDto);
 
         public Task Delete(string id);
     }

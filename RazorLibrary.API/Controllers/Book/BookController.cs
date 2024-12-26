@@ -62,5 +62,20 @@ namespace RazorLibrary.API.Controllers.Book
                 return NotFound(err.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromRoute]string id, [FromBody]WriteBookDto bookDto)
+        {
+            try
+            {
+                await _writeBookService.Edit(id, bookDto);
+
+                return Ok();
+            }
+            catch (NotFoundException err)
+            {
+                return NotFound(err.Message);
+            }
+        }
     }
 }

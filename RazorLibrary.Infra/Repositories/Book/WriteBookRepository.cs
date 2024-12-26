@@ -26,9 +26,12 @@ namespace RazorLibrary.Infra.Repositories.Book
             _context.Books.Remove(new Domain.Entities.Book() { Id = new Guid(id)});
         }
 
-        public Task<Domain.Entities.Book> Edit(Domain.Entities.Book book)
+        public async Task<Domain.Entities.Book> Edit(Domain.Entities.Book book)
         {
-            throw new NotImplementedException();
+            _context.Attach(book);
+            _context.Entry(book).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+            return book;
         }       
     }
 }

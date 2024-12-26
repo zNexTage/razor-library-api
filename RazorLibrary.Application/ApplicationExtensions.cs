@@ -14,6 +14,7 @@ namespace RazorLibrary.Application
         private static void AddServices(IServiceCollection service)
         {
             service.AddScoped<IWriteBookService, WriteBookService>();
+            service.AddScoped<IReadBookService, ReadBookService>();
         }
     }
 }
