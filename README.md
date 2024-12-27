@@ -1,6 +1,6 @@
 # RazorLibrary
-API para cadastro, edição, remoção e consulta de livros. 
-Aplicação feita com base no desafio da [https://devchallenge-v2.vercel.app/details/e3604e84-d7d5-4543-8a8e-ce4f5c2187d6](DevChallenge)
+API para cadastro, ediÃ§Ã£o, remoÃ§Ã£o e consulta de livros. 
+AplicaÃ§Ã£o feita com base no desafio da [DevChallenge](https://devchallenge-v2.vercel.app/details/e3604e84-d7d5-4543-8a8e-ce4f5c2187d6)
 
 # Arquitetura
 
@@ -10,33 +10,33 @@ Foi adotado o uso da arquitetura hexagonal.
 
 ### Core
 
-Contém as aplicações core do negócio:
+ContÃ©m as aplicaÃ§Ãµes core do negÃ³cio:
 
-- RazorLibrary.Application -> contém as implementações de regras de negócio, como: serviços, validações, etc.
-- RazorLibrary.Domain -> contém as interfaces e abstrações da aplicação. Não utiliza nenhum
+- RazorLibrary.Application -> contÃ©m as implementaÃ§Ãµes de regras de negÃ³cio, como: serviÃ§os, validaÃ§Ãµes, etc.
+- RazorLibrary.Domain -> contÃ©m as interfaces e abstraÃ§Ãµes da aplicaÃ§Ã£o. NÃ£o utiliza nenhum
 pacote externo.
 
 ### Adapters
 
 #### Driven (Adaptador dirigido)
 
-Camada que invoca serviços externos da solução, como conexão com banco de dados.
+Camada que invoca serviÃ§os externos da soluÃ§Ã£o, como conexÃ£o com banco de dados.
 
-- RazorLibrary.Infra -> contém as implementações e conexão com serviços externos, como:
-	- Conexão com o SQL Server;
-	- Implementação dos Repositories (interação com o banco de dados);
+- RazorLibrary.Infra -> contÃ©m as implementaÃ§Ãµes e conexÃ£o com serviÃ§os externos, como:
+	- ConexÃ£o com o SQL Server;
+	- ImplementaÃ§Ã£o dos Repositories (interaÃ§Ã£o com o banco de dados);
 	- Migrations;
-	- Configuração do DbContext (Entity Framework).
+	- ConfiguraÃ§Ã£o do DbContext (Entity Framework).
 
 #### Driving (adaptador condutor)
 
-Porta de entrada do hexagono. Camada que recebe o "input" dos usuários e efetua o processamento,
-invocando as regras de negócio definidas na aplicação.
+Porta de entrada do hexagono. Camada que recebe o "input" dos usuÃ¡rios e efetua o processamento,
+invocando as regras de negÃ³cio definidas na aplicaÃ§Ã£o.
 
-- RazorLibrary.API -> porta de entrada da aplicação. Recebe os dados do usuário e encaminha para o Core por 
+- RazorLibrary.API -> porta de entrada da aplicaÃ§Ã£o. Recebe os dados do usuÃ¡rio e encaminha para o Core por 
 meio das portas (interfaces).
 
-# Referências
+# ReferÃªncias
 
 - https://devchallenge-v2.vercel.app/details/e3604e84-d7d5-4543-8a8e-ce4f5c2187d6;
 - https://www.udemy.com/course/introducao-a-arquitetura-hexagonal/;
