@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorLibrary.API", "RazorLi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{90428CC7-08A5-4ECD-9629-A83124F5687C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorLibrary.Tests.Commom", "RazorLibrary.Tests.Commom\RazorLibrary.Tests.Commom.csproj", "{4466C75F-5A65-485F-A2C6-34928FFE6C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorLibrary.Tests.Commom", "RazorLibrary.Tests.Commom\RazorLibrary.Tests.Commom.csproj", "{4466C75F-5A65-485F-A2C6-34928FFE6C42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorLibrary.Tests.Application", "RazorLibrary.Tests.Domain\RazorLibrary.Tests.Application.csproj", "{D798B39B-B02E-4FCB-AD28-0DA361E6A111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorLibrary.Tests.Application", "RazorLibrary.Tests.Domain\RazorLibrary.Tests.Application.csproj", "{D798B39B-B02E-4FCB-AD28-0DA361E6A111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorLibrary.Tests.API", "RazorLibrary.Tests.API\RazorLibrary.Tests.API.csproj", "{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{D798B39B-B02E-4FCB-AD28-0DA361E6A111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D798B39B-B02E-4FCB-AD28-0DA361E6A111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D798B39B-B02E-4FCB-AD28-0DA361E6A111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{14F313D0-8EC3-4D0C-9C22-06FF733EA41C} = {7633619D-9F02-4A4D-9AF2-B27F97A9B698}
 		{4466C75F-5A65-485F-A2C6-34928FFE6C42} = {90428CC7-08A5-4ECD-9629-A83124F5687C}
 		{D798B39B-B02E-4FCB-AD28-0DA361E6A111} = {90428CC7-08A5-4ECD-9629-A83124F5687C}
+		{50A9B0EE-8CFA-4279-84AB-15D7C4A566D5} = {90428CC7-08A5-4ECD-9629-A83124F5687C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5AFA4AA-ED31-4CFD-90E5-4B4D34E29629}
