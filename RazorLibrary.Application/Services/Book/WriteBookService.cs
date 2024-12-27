@@ -70,7 +70,7 @@ namespace RazorLibrary.Application.Services.Book
                 throw new NotFoundException("Não é possível concluir a ação, pois o livro buscado não existe.");
             }
 
-            book = _mapper.Map<Domain.Entities.Book>(bookDto);
+            _mapper.Map(bookDto, book);
 
             await _wRepository.Edit(book);
             await _unitOfWork.CommitAsync();
