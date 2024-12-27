@@ -1,6 +1,7 @@
-﻿namespace RazorLibrary.Domain.Adapters.Services.Book
+﻿using RazorLibrary.Domain.DataTransferObject.Book;
+
+namespace RazorLibrary.Domain.Adapters.Services.Book
 {
-    using RazorLibrary.Domain.DataTransferObject.Book;
 
     public interface IReadBookService
     {

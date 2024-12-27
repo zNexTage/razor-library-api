@@ -17,14 +17,14 @@ namespace RazorLibrary.Application.Services.Book
             _mapper = mapper;
         }
 
-        async Task<List<ReadBookDto>> IReadBookService.GetAll()
+        public async Task<List<ReadBookDto>> GetAll()
         {
             var books = await _readBookRepository.GetAll();
 
             return _mapper.Map<List<ReadBookDto>>(books);
         }
 
-        async Task<ReadBookDto> IReadBookService.GetById(string id)
+        public async Task<ReadBookDto> GetById(string id)
         {
             var book = await _readBookRepository.GetById(id);
 
