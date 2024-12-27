@@ -76,9 +76,9 @@ namespace RazorLibrary.API.Controllers.Book
         {
             try
             {
-                await _writeBookService.Edit(id, bookDto);
+                var book = await _writeBookService.Edit(id, bookDto);
 
-                return Ok();
+                return Ok(book);
             }
             catch (NotFoundException err)
             {
