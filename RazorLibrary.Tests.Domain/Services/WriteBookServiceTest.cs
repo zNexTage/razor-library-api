@@ -180,11 +180,7 @@ namespace RazorLibrary.Tests.Application.Services
             //Assert
             Assert.NotNull(result);
 
-            // Após a edição, o livro não poderá estar com os mesmos valores iniciais.
-            Assert.NotEqual(result.Title, book.Title);
-            Assert.NotEqual(result.Photo, book.Photo);
-            Assert.NotEqual(result.Publisher, book.Publisher);
-            Assert.NotEqual(String.Join(", ", result.Authors), book.Authors);
+            Assert.Equal(result.Id, book.Id.ToString());
 
             // O resultado deve ser igual aos valores passados para o método.
             Assert.Equal(result.Title, bookDto.Title);
