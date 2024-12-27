@@ -19,7 +19,16 @@ namespace RazorLibrary.API.Controllers.Book
             _readBookService = readBookService;
         }
 
+        /// <summary>
+        /// Cria um novo livro na base de dados.
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns>Livro criado</returns>
         [HttpPost]
+        [EndpointSummary("Cria um novo livro na base de dados")]
+        [ProducesResponseType(typeof(ReadBookDto), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
         public async Task<ActionResult> Add(WriteBookDto book) {
             try
             {
@@ -31,10 +40,20 @@ namespace RazorLibrary.API.Controllers.Book
             {
                 return BadRequest(err.ErrorMessages);
             }
+            catch(Exception err)
+            {
+                return StatusCode(500, "Ops... Ocorreu um erro interno e não foi possível concluir a ação.");
+            }
 
         }
 
+        /// <summary>
+        /// Obtém todos os livros registrados na base de dados
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [EndpointSummary("Obtém todos os livros registrados na base de dados")]
+        [ProducesResponseType(typeof(List<ReadBookDto>), 200)]
         public async Task<ActionResult> GetAll()
         {
             var books = await _readBookService.GetAll();
@@ -42,7 +61,15 @@ namespace RazorLibrary.API.Controllers.Book
             return Ok(books);
         }
 
+        /// <summary>
+        /// Obtém um livro na base de dados utilizando o id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
+        [EndpointSummary("Obtém um livro na base de dados utilizando o id")]
+        [ProducesResponseType(typeof(List<ReadBookDto>), 200)]
+        [ProducesResponseType(typeof(string), 404)]
         public async Task<ActionResult> GetById(string id)
         {
             try
@@ -57,7 +84,15 @@ namespace RazorLibrary.API.Controllers.Book
             }
         }
 
+        /// <summary>
+        /// remove um livro da base de dados utilizando o id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
+        [EndpointSummary("Remove um livro da base de dados utilizando o id")]
+        [ProducesResponseType(typeof(ReadBookDto), 200)]
+        [ProducesResponseType(typeof(string), 404)]
         public async Task<ActionResult> Delete(string id)
         {
             try
@@ -71,7 +106,17 @@ namespace RazorLibrary.API.Controllers.Book
             }
         }
 
+        /// <summary>
+        /// Atualiza um livro na base de dados
+        /// </summary>
+        /// <param name="id">Id do livro a ser atualizado</param>
+        /// <param name="bookDto">Dados que serão utilizados para atualizar o livro</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
+        [EndpointSummary("Atualiza um livro na base de dados")]
+        [ProducesResponseType(typeof(ReadBookDto), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(string), 404)]
         public async Task<ActionResult> Update([FromRoute]string id, [FromBody]WriteBookDto bookDto)
         {
             try
